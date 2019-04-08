@@ -1,0 +1,13 @@
+public class Student {
+
+	public String attendance = "No attendance";
+	public String name = "";
+	public String school = "";
+	
+	public Student(String n, String s) {     //initialization of the student
+		this.name = n; 
+		this.school = s;
+	}
+	
+	Student next = null;                     //next object in connect
+}

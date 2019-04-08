@@ -1,0 +1,144 @@
+import java.util.Scanner;
+
+public class Records {
+	// program on records 
+	Student root = null;
+	Student prev_stud = null;
+	
+	public void displayAll(){   //NEEDS EXPLANATION
+		Student display = root;
+		int counter =1;   //if there are no student/s it will automatically end
+		if(root == null) {
+			System.out.println("Error! There are no students registered yet");
+		}
+		else{
+			//start of the recording of the data
+			System.out.print("Name");
+			distance(" ",30);
+			System.out.print("Attendance");
+			distance("",8);
+			System.out.println("School");
+			while(true) {
+					System.out.print(counter+". " +display.name);
+					distance(display.name,30);
+					System.out.print(display.attendance);
+					distance(display.attendance,18);
+					System.out.println(display.school);
+					if(display.next!=null) {
+						display = display.next;
+					}
+					else {
+						break;
+					}
+					counter++;
+			}
+		}
+	}
+	
+	public void register(String name, String school) {
+		
+		Student stud = new Student(name, school);
+		
+		if(root == null) {
+			root = stud;
+			prev_stud = root; //connecting to root and tail
+		}
+		else {
+			prev_stud.next = stud; 
+			/*
+			
+				if only one student it become the head and the tail,
+				if two students the first becomes the root and the second becomes the tail,
+				if three students student one becomes the head and student 3 automatically becomes the tail
+			
+			*/
+			prev_stud = prev_stud.next;
+		}
+	}
+	
+	public void delete(String n) {
+		
+		Student check = root;
+		
+		if(root == null) {
+			System.out.println("Error! There are no students registered yet");
+		}
+		else if(root.name.equalsIgnoreCase(n)) {
+			System.out.println("Deleted " + root.name);
+			root = root.next;
+		}
+		else{
+			while(true) {
+				
+				if(check.next == null) {
+					System.out.println("There is no student with that name");
+					break;
+				}
+				
+				if(check.next.name.equalsIgnoreCase(n)) {
+					System.out.println("Deleted " + check.next.name);
+					check.next = check.next.next;
+					break;
+				}
+				check = check.next;
+				
+			}
+		}
+	}
+	
+	public void checkAttendance() {
+		
+		Scanner sc = new Scanner(System.in);
+		Student current = root;
+		int counter = 1;
+		if(root == null) {
+			System.out.println("WARNING! There are no students registered yet");
+		}
+		else{
+			while(true) {
+					
+				boolean valid = true;
+				
+				System.out.println(counter +". " + current.name);
+				System.out.println("Enter P-present, A-absent, L-late");
+				String attendance = sc.nextLine();
+				
+				switch(attendance) {
+				
+				case "P":
+					current.attendance ="Present";
+					break;
+				case "A":
+					current.attendance ="Absent";
+					break;
+				case "L":
+					current.attendance ="Late";
+					break;
+				default:
+					System.out.println("Enter valid input");
+					valid = false;
+					break;
+				}
+				if(valid) {
+					if(current.next!=null) {
+						current = current.next;
+						counter++;
+					}
+					else if(current.next == null){
+						break;
+					}
+				}
+					
+			}
+		}
+		
+	}
+	
+	public void distance(String s, int d) {
+		
+		for(int i = s.length(); i<d; i++) {
+			System.out.print(" ");
+		}
+	}
+	
+}
